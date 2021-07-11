@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from .models import Book, Author, BookInstance, Genre
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 
 def index(request):
@@ -45,13 +45,13 @@ def book_detail_view(request, primary_key):
 
 def author_detail_view(request, pk):
     author = get_object_or_404(Author, pk=pk)
-    print(author.book)
+    print(author)
     return render(request, 'catalog/author_detail.html', context={'author': author})
 
 
 class BookListView(generic.ListView):
     model = Book
-    paginate_by = 2
+    paginate_by = 5
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get the context
@@ -63,13 +63,14 @@ class BookListView(generic.ListView):
 
 class AuthorListView(generic.ListView):
     model = Author
-    paginate_by = 2
+    paginate_by = 5
 
     def get_context_data(self, **kwargs):
         context = super(AuthorListView, self).get_context_data(**kwargs)
-        return 
+        return context
         
 
+# get user's borrowed books 
 class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     model = BookInstance
     template_name = 'catalog/bookinstance_list_borrowed_user.html'
@@ -77,3 +78,14 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return BookInstance.objects.filter(borrower = self.request.user).filter(status__exact = 'o').order_by('due_back')
+
+
+# get all borrowed books
+class LoanedBooksAllListView(PermissionRequiredMixin, generic.ListView):
+    model = BookInstance
+    permission_required = 'catalog.can_mark_returned'
+    template_name = 'catalog/bookinstance_list_borrowed_all.html'
+    paginate_by = 5
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(status__exact = 'o').order_by('due_back')

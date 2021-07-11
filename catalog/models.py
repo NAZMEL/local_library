@@ -59,6 +59,7 @@ class BookInstance(models.Model):
 
     class Meta:
         ordering = ['due_back']
+        permissions = (( "can_mark_returned", "Set book as returned"),)
 
     def __str__(self):
         return f'{self.id} ({self.book.title})'
@@ -77,7 +78,7 @@ class Author(models.Model):
     date_of_death = models.DateField('Died', null=True, blank=True)
 
     class Meta:
-        ordering = ['first_name', 'last_name']
+        ordering = ['first_name', 'last_name', 'book']
 
     def get_absolute_url(self):
         return reverse('author-detail', args=[str(self.id)])

@@ -30,6 +30,16 @@
                             <li><a href="{% url 'login' %}?next={{request.path}}">Login</a></li>
                         {% endif %}
                     </ul>
+
+                    {% if user.is_staff %} 
+                        <hr/>
+                        <ul class="sider-nav">
+                            <li>Staff</li>
+                           
+                            <li><a href= "{% url 'all-borrowed' %}">All Borrowed</a></li>
+                            
+                        </ul>
+                    {% endif %} 
                 {% endblock %}
             </div>
 
