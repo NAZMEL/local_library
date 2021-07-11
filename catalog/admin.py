@@ -2,11 +2,6 @@ from django.contrib import admin
 from django.contrib.admin.decorators import register
 from .models import Author, Genre, Book, BookInstance
 
-# Register your models here.
-
-#admin.site.register(Book)
-#admin.site.register(Author)
-#admin.site.register(BookInstance)
 admin.site.register(Genre)
 
 
@@ -47,3 +42,38 @@ class BookInstanceAdmin(admin.ModelAdmin):
             'fields': ('status', 'due_back')
         })
     )
+
+
+@admin.register
+class BookInstanceAdmin(admin.ModelAdmin):
+    list_display = (
+        'book',
+        'status',
+        'borrower',
+        'due_back',
+        'id',
+    )
+
+    list_filter = (
+        'status',
+        'due_back'
+    )
+
+    fieldsets = (
+        (None,{
+            'fields': (
+                'book',
+                'imprint',
+                'id',
+            )
+        }),
+
+        ('Availability',{
+            'fields': (
+                'status',
+                'due_back',
+                'borrower',
+            )
+        })
+    )
+

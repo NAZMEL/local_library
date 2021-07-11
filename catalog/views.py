@@ -4,7 +4,7 @@ from django.views import generic
 
 
 def index(request):
-
+    # count visits on the site
     num_visits = request.session.get('num_visits', 0)
     request.session['num_visits'] = num_visits + 1
 
@@ -30,9 +30,6 @@ def index(request):
     }
     return render(request, 'index.html', context= context)
 
-
-# class BookDetailView(generic.DetailView):
-#     model = Book
 
 # the same BookDetailView
 def book_detail_view(request, primary_key):
