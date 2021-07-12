@@ -3,3 +3,46 @@
     padding: 0;
     list-style: none;
 }
+
+.card{
+    width: 400px;
+    background-color: #fff;
+    margin: 30px;
+    padding: 10px;
+    box-shadow: 0 5px 10px #ccc;
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+/* errors in forms (login, registration) */
+.text-error{
+    text-align: center;
+    font-size: 24px;
+    color: #ff0000
+}
+
+input[type="text"], input[type="password"], input[type="email"]{
+    width: 350px;
+    height: 35px;
+    font-size: 18px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    padding: left;
+}
+
+.btn-login{
+    padding: 10px 10px;
+    margin: 5px 0 20px 0;
+    font-size: 18px;
+    color: #fff;
+    background-color: #0d76d8;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-login:hover{
+    transition: all 0.5s;
+    background: rgb(151, 226, 240);
+    color: #040505;
+}
